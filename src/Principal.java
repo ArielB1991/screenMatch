@@ -1,5 +1,8 @@
+import com.screenmatch.model.Episodio;
 import com.screenmatch.model.Pelicula;
 import com.screenmatch.model.Serie;
+import screenmatch.calculos.CalculadoraDeTiempo;
+import screenmatch.calculos.FiltroRecomendacion;
 
 public class Principal {
 
@@ -32,9 +35,29 @@ public class Principal {
 
         Serie casaDragon = new Serie();
         casaDragon.setNombre("Casa del Dragon");
-        casaDragon.getFechaDeLanzamiento(2022);
+        casaDragon.setFechaDeLanzamiento(2022);
         casaDragon.setMinutosPorEpisodio(50);
         casaDragon.setEpisodiosPorTemporada(10);
+        casaDragon.setTemporadas(1);
 
+        CalculadoraDeTiempo calculadora = new CalculadoraDeTiempo();
+
+        calculadora.incluye(miPelicula);
+        System.out.println("+++++"+ calculadora.getTiempoTotal());
+        calculadora.incluye(casaDragon);
+        System.out.println("+++++"+ calculadora.getTiempoTotal());
+        calculadora.incluye(otraPelicula);
+        System.out.println("Tiempo necesario para ver tus titulos favoritos estas vacaciones: "+calculadora.getTiempoTotal() + " minutos");
+
+        FiltroRecomendacion filtroRecomendacion = new FiltroRecomendacion();
+        filtroRecomendacion.filtra(miPelicula);
+
+        Episodio episodio = new Episodio();
+        episodio.setNumero(1);
+        episodio.setNombre("La casa targaryen");
+        episodio.setSerie(casaDragon);
+        episodio.setVisualizaciones(50);
+
+        filtroRecomendacion.filtra(episodio);
     }
 }
